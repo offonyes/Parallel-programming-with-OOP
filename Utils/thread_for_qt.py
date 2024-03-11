@@ -2,7 +2,7 @@ import concurrent.futures
 import random as rd
 from PyQt5.QtCore import *
 import time
-from Figures import *
+from .Figures import *
 
 
 def work(_):
