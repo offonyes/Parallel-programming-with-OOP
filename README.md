@@ -51,9 +51,9 @@ Number 100.000
 Number - 10.000 
 - Only Multithreading: 0.19250 seconds
 - Only Multiprocessing: 1.64703 seconds
-- Mixed Approach: 0.17337 seconds
+- Only Mixed Approach: 0.17337 seconds
 
 Number 100.000 
 - Only Multithreading: 2.32054 seconds
 - Only Multiprocessing: 33.14703 seconds
-- Mixed Approach: 0.30921 seconds
+- Only Mixed Approach: 0.30921 seconds
