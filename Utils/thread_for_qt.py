@@ -2,7 +2,8 @@ import concurrent.futures
 import random as rd
 from PyQt5.QtCore import *
 import time
-from .Figures import *
+from Figures import *
+
 
 def work(_):
     results = [
@@ -10,6 +11,8 @@ def work(_):
         Rectangle([rd.randint(1, 10), rd.randint(1, 10)]).area(),
         Square([rd.randint(1, 10)]).area()
     ]
+    return results
+
 
 def work_for_proc(_):
     results = [
@@ -17,13 +20,18 @@ def work_for_proc(_):
         Rectangle([rd.randint(1, 10), rd.randint(1, 10)]).area(),
         Square([rd.randint(1, 10)]).area()
     ]
+    return results
+
+
 def work_for_process_pool_executor(numb, _):
     with concurrent.futures.ThreadPoolExecutor(20) as executor:
         executor.map(work_for_proc, range(numb // 20))
 
+
 class WorkWithFigures(QObject):
     progress_bar = pyqtSignal(int, int)
     time = pyqtSignal(float, int)
+
     def __init__(self, number, index):
         super(WorkWithFigures, self).__init__()
         self.number = number
@@ -39,17 +47,19 @@ class WorkWithFigures(QObject):
 
     def work_thread(self, i):
         results = [
-        Trapezoid([rd.randint(1, 10), rd.randint(1, 10), rd.randint(1, 10)]).area(),
-        Rectangle([rd.randint(1, 10), rd.randint(1, 10)]).area(),
-        Square([rd.randint(1, 10)]).area()
-    ]
+            Trapezoid([rd.randint(1, 10), rd.randint(1, 10), rd.randint(1, 10)]).area(),
+            Rectangle([rd.randint(1, 10), rd.randint(1, 10)]).area(),
+            Square([rd.randint(1, 10)]).area()
+        ]
         self.progress_bar.emit(i + 1, self.index)
-    
+        return results
+
     def get_normal(self):
         start = time.perf_counter()
-        result = list(map(self.norm_work,[i for i in range(self.number)]))
+        result = list(map(self.norm_work, [i for i in range(self.number)]))
         finish = time.perf_counter()
         self.time.emit(finish - start, self.index)
+        return result
 
     def get_threading(self):
         start = time.perf_counter()
@@ -59,7 +69,7 @@ class WorkWithFigures(QObject):
         finish = time.perf_counter()
         self.time.emit(finish - start, self.index)
 
-    def get_myltiprocessing(self):
+    def get_multiprocessing(self):
         start = time.perf_counter()
         with concurrent.futures.ProcessPoolExecutor() as executor:
             futures = [executor.submit(work, i) for i in range(self.number)]
@@ -74,7 +84,7 @@ class WorkWithFigures(QObject):
     def get_united(self):
         start = time.perf_counter()
         with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:
-            futures = [executor.submit(work_for_process_pool_executor,self.number, i) for i in range(5)]
+            futures = [executor.submit(work_for_process_pool_executor, self.number, i) for i in range(5)]
 
         for i, future in enumerate(concurrent.futures.as_completed(futures)):
             result = future.result()
