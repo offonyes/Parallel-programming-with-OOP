@@ -40,7 +40,7 @@ python run.py
 Number - 10.000 
 - Multithreading: 0.25358 seconds
 - Multiprocessing: 1.94703 seconds
-- Mixed Approach: 0.50337 seconds
+- Mixed Approach: 0.40337 seconds
 
 Number 100.000 
 - Multithreading: 2.62054 seconds
