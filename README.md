@@ -38,13 +38,13 @@ python run.py
 ## Result 
 ### All together
 Number - 10.000 
-- Only Multithreading: 0.25358 seconds
-- Only Multiprocessing: 1.94703 seconds
+- Multithreading: 0.25358 seconds
+- Multiprocessing: 1.94703 seconds
 - Mixed Approach: 0.50337 seconds
 
 Number 100.000 
-- Only Multithreading: 2.62054 seconds
-- Only Multiprocessing: 40.94703 seconds
+- Multithreading: 2.62054 seconds
+- Multiprocessing: 40.94703 seconds
 - Mixed Approach: 1.60921 seconds
 
 ### Separately
